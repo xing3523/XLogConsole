@@ -1,0 +1,16 @@
+PODS:
+  - XLogConsole (1.0.0)
+
+DEPENDENCIES:
+  - XLogConsole (from `../`)
+
+EXTERNAL SOURCES:
+  XLogConsole:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  XLogConsole: 4bf61d06c2991822ee5af610d8cf66b4bfd98fbf
+
+PODFILE CHECKSUM: 3abf7f095d630e71dbec30d94efaf71a5febdbbd
+
+COCOAPODS: 1.11.2
