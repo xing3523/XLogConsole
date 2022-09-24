@@ -12,11 +12,11 @@ Add a console print log to the app to facilitate troubleshooting
 
 ## Main function
 - Support Minimized, full screen and landscape
-- Support to extend the level, we can customize the show color for level,
+- Support to extend the level, supports custom level color
 - Support filter the log by level or name
 - Support searching log by key
 - Support to show the file and method names for the log
-- Support export log
+- Support get or export log at anytime
 
 ## How to use
 ### Simple code to use
