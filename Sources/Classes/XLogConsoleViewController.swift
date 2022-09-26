@@ -312,7 +312,7 @@ extension XLogConsoleViewController: UITableViewDelegate, UITableViewDataSource,
             att.insert(NSAttributedString(string: "[\(indexPath.row + 1)] ", attributes: console.textAttributes), at: 0)
             cell.textView.attributedText = att
         } else {
-            cell.textView.attributedText = item.logAttString
+            cell.textView.attributedText = item.showAttString
         }
         return cell
     }

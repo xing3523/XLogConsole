@@ -136,6 +136,7 @@ open class XLogConsole {
 
     lazy var consoleWindow: XLogWindow = {
         let window = XLogWindow()
+        window.adjustWindowScene()
         window.backgroundColor = .clear
         window.windowLevel = UIWindow.Level(rawValue: 1.0)
         window.rootViewController = consoleViewController
@@ -146,6 +147,19 @@ open class XLogConsole {
 }
 
 class XLogWindow: UIWindow {
+    func adjustWindowScene() {
+        if #available(iOS 13.0, *) {
+            for windowScene in UIApplication.shared.connectedScenes {
+                if windowScene.activationState.rawValue <= UIScene.ActivationState.foregroundActive.rawValue {
+                    self.windowScene = windowScene as? UIWindowScene
+                }
+            }
+            NotificationCenter.default.addObserver(forName: UIScene.willConnectNotification, object: nil, queue: nil) { notificatio in
+                self.windowScene = notificatio.object as? UIWindowScene
+            }
+        }
+    }
+
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         let view = super.hitTest(point, with: event)
         if view == rootViewController?.view {
