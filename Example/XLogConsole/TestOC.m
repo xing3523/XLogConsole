@@ -6,18 +6,20 @@
 //
 
 #import "TestOC.h"
-#import "XLogConsole_Example-Swift.h"
-#import "Marco.h"
+
+@import XLogConsole;
+
 @implementation TestOC
 
 + (void)logTest {
-    XLog(@"logTestOC1 class method");
-	XLogWarn(@"logTestOC1 warn class method");
+	XLog(@"logTestOC1 class method")
+	XLogWarn(@"logTestOC1 warn class method")
+	XLogWarn(@"log %@", @"warn")
 }
 
 - (void)logTestWithName:(NSString *)name {
-	XLogWarnWithName(@"logTestOC2 with name, instance method", name);
-    XLogErrorWithName(@"logTestOC2 with name, instance method", name);
+	XLogWarnWithName(name,@"logTestOC2 with name, instance method")
+	XLogErrorWithName(name,@"logTestOC2 with name, instance method")
 }
 
 @end

@@ -7,24 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		21DC790D28D8972E0008E4F3 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DC790C28D8972E0008E4F3 /* Logger.swift */; };
 		21DC792028DB37B80008E4F3 /* TestOC.m in Sources */ = {isa = PBXBuildFile; fileRef = 21DC791F28DB37B80008E4F3 /* TestOC.m */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		982ADAE64E98AFAF93512105 /* Pods_XLogConsole_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE46AD35BEC46AEB7805BB4 /* Pods_XLogConsole_Example.framework */; };
+		B01B0B0A164B04DE39AA376C /* Pods_XLogConsole_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94CC622CE690D7E717119975 /* Pods_XLogConsole_Example.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2194516128DD4F93007A4948 /* Marco.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Marco.h; sourceTree = "<group>"; };
-		21DC790C28D8972E0008E4F3 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		21DC790F28DB273C0008E4F3 /* XLogConsole */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = XLogConsole; path = ..; sourceTree = "<group>"; };
 		21DC791D28DB37B80008E4F3 /* XLogConsole_Example-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XLogConsole_Example-Bridging-Header.h"; sourceTree = "<group>"; };
 		21DC791E28DB37B80008E4F3 /* TestOC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestOC.h; sourceTree = "<group>"; };
 		21DC791F28DB37B80008E4F3 /* TestOC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestOC.m; sourceTree = "<group>"; };
-		4CE46AD35BEC46AEB7805BB4 /* Pods_XLogConsole_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XLogConsole_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD01AFB9204008FA782 /* XLogConsole_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XLogConsole_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -36,6 +32,7 @@
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		61AC53553EA3E8A3EF91E1C5 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		92EAB27A05322AF95B2CEFB4 /* Pods-XLogConsole_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XLogConsole_Example.debug.xcconfig"; path = "Target Support Files/Pods-XLogConsole_Example/Pods-XLogConsole_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		94CC622CE690D7E717119975 /* Pods_XLogConsole_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XLogConsole_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BB3C0DF523AAD92034C6848 /* XLogConsole.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = XLogConsole.podspec; path = ../XLogConsole.podspec; sourceTree = "<group>"; };
 		9BB8EA3A72893B52D1A96DF6 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		DF8A4B87F1A1A0C2D9318FC7 /* Pods-XLogConsole_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XLogConsole_Example.release.xcconfig"; path = "Target Support Files/Pods-XLogConsole_Example/Pods-XLogConsole_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -46,7 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				982ADAE64E98AFAF93512105 /* Pods_XLogConsole_Example.framework in Frameworks */,
+				B01B0B0A164B04DE39AA376C /* Pods_XLogConsole_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,7 +61,7 @@
 		34CF04C17BBA3CB3967B74D0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4CE46AD35BEC46AEB7805BB4 /* Pods_XLogConsole_Example.framework */,
+				94CC622CE690D7E717119975 /* Pods_XLogConsole_Example.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -95,10 +92,8 @@
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
-				21DC790C28D8972E0008E4F3 /* Logger.swift */,
 				21DC791E28DB37B80008E4F3 /* TestOC.h */,
 				21DC791F28DB37B80008E4F3 /* TestOC.m */,
-				2194516128DD4F93007A4948 /* Marco.h */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
@@ -164,7 +159,7 @@
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
-				570C4672540733A555FB0B9A /* [CP] Embed Pods Frameworks */,
+				AC989CAF7F81CF51FB817413 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -224,24 +219,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		570C4672540733A555FB0B9A /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-XLogConsole_Example/Pods-XLogConsole_Example-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/XLogConsole/XLogConsole.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLogConsole.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-XLogConsole_Example/Pods-XLogConsole_Example-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		A5961B726449590F35AF178E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -264,6 +241,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		AC989CAF7F81CF51FB817413 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-XLogConsole_Example/Pods-XLogConsole_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/XLogConsole/XLogConsole.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLogConsole.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-XLogConsole_Example/Pods-XLogConsole_Example-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -273,7 +268,6 @@
 			files = (
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				21DC792028DB37B80008E4F3 /* TestOC.m in Sources */,
-				21DC790D28D8972E0008E4F3 /* Logger.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -405,6 +399,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = XLogConsole/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
@@ -424,6 +420,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = XLogConsole/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;

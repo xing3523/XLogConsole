@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import XLogConsole
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -16,6 +16,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        let console = XLogConsole.shared
+        #if !DEBUG
+            console.enable = false
+        #endif
+//        console.showLogNum = false
+    //    console.logDetail = true
+    //    console.textAttributes = [.font: UIFont.boldSystemFont(ofSize: 16)]
+    //    console.timeAttributes = [.font: UIFont.italicSystemFont(ofSize: 16)]
+    //    console.backgroundColor = .black
+    //    console.timeFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
+    //    console.showConsoleAutomatically = false
         return true
     }
 

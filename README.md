@@ -20,7 +20,18 @@ Add a console print log to the app to facilitate troubleshooting
 
 ## How to use
 ### Simple code to use
-These can be set before use, Most of them are not necessary and have default values
+It's easier to use Helper
+1. `pod 'XLogConsole/Helper'`
+2. `@import XLogConsole;` or `import XLogConsole`
+3. And then use it directly
+```
+XLog(@"log content")// Used in OC
+XLogWarn(@"log %@", @"warn")// Used in OC
+XLog("log content")// Using in Swift
+XLogWarn("log warn")// Using in Swift
+```
+### Customizations and extensions
+Some custom property Settings are provided, most of them are not necessary and have default values
 ```
     let console = XLogConsole.shared
 #if !DEBUG
@@ -35,7 +46,7 @@ These can be set before use, Most of them are not necessary and have default val
 //    console.showConsoleAutomatically = true
 
 ```
-Then it's ready to use
+`XLogLevel` can be extended freely, as shown in the Helper, we can simply wrap it up and then use it.
 ```
 extension XLogLevel {
     public static let warn = XLogLevel(rawValue: "Warn", color: .orange)
@@ -45,10 +56,16 @@ XLogLevel.default.log("log default")
 XLogLevel.warn.log("log warn", name: "mark1")
 XLogLevel.error.log("log error", name: "mark2")
 ```
-Or, as in the example, do the encapsulation again to simplify usage or provides methods that OC can call
+
 ### Operation of the console
 - Click the small icon to display or minimize the console
 - When minimized, drag the icon to move it, and long press to hide it
+
+
+## Release note
+- 1.0.0 Initial release
+- 1.0.1 Compatible windowScene project
+- 1.0.2 Adding helper is convenient for direct use and calling in OC
 
 Some renderings
 
@@ -67,7 +84,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 XLogConsole is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
-1. Add `pod 'XLogConsole'` to the Podfile.
+1. Add `pod 'XLogConsole/Helper'` to the Podfile.
 2. Execute `pod install` or `pod update`.
 
 ### Swift Package Manager Installation

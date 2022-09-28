@@ -53,8 +53,8 @@ open class XLogConsole {
     open var showConsoleAutomatically = true
     /// Whether to show detailed log, including file name, method name, and line number, default false
     open var logDetail = false
-    /// Whether to show current log line num, default false
-    open var showLogNum = false
+    /// Whether to show current log line num, default true
+    open var showLogNum = true
     /// Log text font style
     open var textAttributes: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.white, .font: UIFont.systemFont(ofSize: 15)] {
         didSet {
@@ -113,7 +113,7 @@ open class XLogConsole {
     /// show console with icon
     open class func show() {
         if !console.enable {
-            print("[XLogConsole]: please set enable true")
+            print("[XLogConsole]: Please set enable true first")
             return
         }
         if !console.consoleWindow.isHidden {
