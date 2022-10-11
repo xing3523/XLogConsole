@@ -149,6 +149,7 @@ class XLogConsoleViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.estimatedRowHeight = 44
+        tableView.separatorStyle = .none
         if #available(iOS 11.0, *) {
             tableView.contentInsetAdjustmentBehavior = .never
         }
@@ -425,7 +426,11 @@ class XLogConsoleItemCell: UITableViewCell {
         backgroundColor = .clear
         selectionStyle = .none
         contentView.addSubview(textView)
-        textView.autoresizingMask = [.flexibleLeftMargin, .flexibleTopMargin, .flexibleWidth, .flexibleHeight]
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
+        textView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        textView.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
+        textView.heightAnchor.constraint(equalTo: contentView.heightAnchor).isActive = true
     }
 
     func sizeThatFits(size: CGSize) -> CGSize {

@@ -85,6 +85,16 @@ open class XLogConsole {
         consoleViewController.getLogText()
     }
 
+    /// The console windowScene can be updated for special scenarios
+    /// - Parameter windowScene: UIWindowScene
+    @available(iOS 13.0, *)
+    open func updateWindowScene(_ windowScene: UIWindowScene?) {
+        guard let windowScene = windowScene else {
+            return
+        }
+        consoleWindow.windowScene = windowScene
+    }
+
     /// Add a log
     /// - Parameters:
     ///   - level: log level, for filter and separate show color
@@ -104,9 +114,11 @@ open class XLogConsole {
             showContent = "[" + (file.isEmpty ? "" : "\(((file as NSString).lastPathComponent as NSString).deletingPathExtension).") + "\(fn)" + ":\(line)]\n" + content
         }
         let logItem = XLogItem.log(level: level, name: name, content: showContent)
-        console.consoleViewController.log(item: logItem)
-        if console.showConsoleAutomatically {
-            XLogConsole.show()
+        DispatchQueue.main.async {
+            console.consoleViewController.log(item: logItem)
+            if console.showConsoleAutomatically {
+                XLogConsole.show()
+            }
         }
     }
 
@@ -149,11 +161,7 @@ open class XLogConsole {
 class XLogWindow: UIWindow {
     func adjustWindowScene() {
         if #available(iOS 13.0, *) {
-            for windowScene in UIApplication.shared.connectedScenes {
-                if windowScene.activationState.rawValue <= UIScene.ActivationState.foregroundActive.rawValue {
-                    self.windowScene = windowScene as? UIWindowScene
-                }
-            }
+            self.windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
             NotificationCenter.default.addObserver(forName: UIScene.willConnectNotification, object: nil, queue: nil) { notificatio in
                 self.windowScene = notificatio.object as? UIWindowScene
             }
