@@ -1,6 +1,6 @@
 PODS:
-  - XLogConsole/Core (1.0.2)
-  - XLogConsole/Helper (1.0.2):
+  - XLogConsole/Core (1.0.3)
+  - XLogConsole/Helper (1.0.3):
     - XLogConsole/Core
 
 DEPENDENCIES:
@@ -11,7 +11,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  XLogConsole: 3a09f6fc65a7e099ab9cfe081c05d4f557ccfded
+  XLogConsole: e14889ea47cd3177fac04fb5488b90c74b071a3e
 
 PODFILE CHECKSUM: b0cb7b57eb65e7d1f81e867df8d962d595f27039
 

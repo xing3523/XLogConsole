@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'XLogConsole'
-  s.version          = '1.0.2'
+  s.version          = '1.0.3'
   s.summary          = 'Add a console print log to the app to facilitate troubleshooting'
   s.description      = <<-DESC
   The log can be displayed according to level, name, support keyword search, and export txt, etc.
