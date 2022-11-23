@@ -27,7 +27,7 @@ Pod::Spec.new do |s|
       }
   end
   s.subspec 'Helper' do |ss|
-    ss.source_files = 'Sources/Helper/*'
+    ss.source_files = 'Sources/Helper/*/*'
     ss.dependency 'XLogConsole/Core'
   end
 end

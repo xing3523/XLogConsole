@@ -84,6 +84,11 @@ open class XLogConsole {
     open var logText: String {
         consoleViewController.getLogText()
     }
+    
+    /// Console window
+    public var window: UIWindow {
+        return consoleWindow
+    }
 
     /// The console windowScene can be updated for special scenarios
     /// - Parameter windowScene: UIWindowScene
@@ -179,10 +184,15 @@ class XLogWindow: UIWindow {
 }
 
 private let resourceBundle: Bundle = {
-    let mainBundle = Bundle(for: XLogConsole.self)
-    let podBundlePath = mainBundle.path(forResource: "XLogConsole", ofType: "bundle")
-    let packetBundlePath = mainBundle.path(forResource: "XLogConsole_XLogConsole", ofType: "bundle") ?? ""
-    return Bundle(path: podBundlePath ?? packetBundlePath) ?? Bundle.main
+    #if SWIFT_PACKAGE
+        return Bundle.module
+    #else
+        let mainBundle = Bundle(for: XLogConsole.self)
+        if let podBundlePath = mainBundle.path(forResource: "XLogConsole", ofType: "bundle") {
+            return Bundle(path: podBundlePath) ?? Bundle.main
+        }
+        return Bundle.main
+    #endif
 }()
 
 extension UIImage {

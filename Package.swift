@@ -11,7 +11,7 @@ let package = Package(
     products: [
         .library(
             name: "XLogConsole",
-            targets: ["XLogConsole"]),
+            targets: ["XLogConsole"])
     ],	
     dependencies: [
     ],
@@ -20,8 +20,8 @@ let package = Package(
             name: "XLogConsole",
             dependencies: [],
             path: "Sources",
-            sources: ["Classes"],
+            sources: ["Classes","Helper/Swift"],
             resources: [.copy("Assets/Images.xcassets")]
-        ),
+        )
     ]
 )
