@@ -55,6 +55,8 @@ open class XLogConsole {
     open var logDetail = false
     /// Whether to show current log line num, default true
     open var showLogNum = true
+    /// Whether to cache for history, default true
+    open var logCache = true
     /// Log text font style
     open var textAttributes: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.white, .font: UIFont.systemFont(ofSize: 15)] {
         didSet {
@@ -136,6 +138,7 @@ open class XLogConsole {
         if !console.consoleWindow.isHidden {
             return
         }
+        console.consoleViewController.checkShow()
         UIView.performWithoutAnimation {
             console.consoleWindow.alpha = 0
             console.consoleWindow.isHidden = false
@@ -168,7 +171,10 @@ class XLogWindow: UIWindow {
         if #available(iOS 13.0, *) {
             self.windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
             NotificationCenter.default.addObserver(forName: UIScene.willConnectNotification, object: nil, queue: nil) { notificatio in
-                self.windowScene = notificatio.object as? UIWindowScene
+                let ws = notificatio.object as? UIWindowScene
+                if let count = ws?.windows.count, count > 0 {
+                    self.windowScene = ws
+                }
             }
         }
     }

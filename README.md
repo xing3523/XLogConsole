@@ -65,7 +65,9 @@ XLogLevel.error.log("log error", name: "mark2")
 ## Release note
 - 1.0.0 Initial release
 - 1.0.1 Compatible windowScene project
-- 1.0.2 Adding helper is convenient for direct use and calling in OC
+- 1.0.2 Add a helper for direct use and invocation in OC
+- 1.0.3 Fix bug
+- 1.0.4 Add cache log file and fix bug
 
 Some renderings
 

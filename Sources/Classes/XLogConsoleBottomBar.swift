@@ -12,6 +12,7 @@ protocol XLogConsoleBottomBarDelegate {
     func nameButtonAction(_ sender: UIButton)
     func fullButtonAction(full: Bool)
     func exportButtonAction()
+    func historyButtonAction()
     func clearButtonAction()
     func searchTextChangeAction(text: String?)
     func keyboardWillChangeFrame(frame: CGRect)
@@ -73,6 +74,7 @@ class XLogConsoleBottomBar: UIView {
         levelButton.addTarget(self, action: #selector(levelButtonClick), for: .touchUpInside)
         nameButton.addTarget(self, action: #selector(nameButtonClick), for: .touchUpInside)
         exportButton.addTarget(self, action: #selector(exportButtonClick), for: .touchUpInside)
+        historyButton.addTarget(self, action: #selector(historyButtonClick), for: .touchUpInside)
         clearButton.addTarget(self, action: #selector(clearButtonClick), for: .touchUpInside)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
@@ -104,6 +106,10 @@ class XLogConsoleBottomBar: UIView {
         delegate?.exportButtonAction()
     }
 
+    @objc func historyButtonClick() {
+        delegate?.historyButtonAction()
+    }
+
     @objc func clearButtonClick() {
         delegate?.clearButtonAction()
         hideFilter()
@@ -128,6 +134,7 @@ class XLogConsoleBottomBar: UIView {
     lazy var exportButton = normalButton(imageName: "export")
     lazy var fullButton = normalButton(imageName: "full")
     lazy var clearButton = normalButton(imageName: "trash")
+    lazy var historyButton = normalButton(imageName: "history")
     lazy var textField: XLogTextFiled = {
         let textField = XLogTextFiled()
         textField.clearButtonTintColor = console.textAttributes[.foregroundColor] as? UIColor
@@ -151,9 +158,9 @@ class XLogConsoleBottomBar: UIView {
     }()
 
     lazy var contentView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [textField, levelButton, nameButton, fullButton, exportButton, clearButton])
+        let stackView = UIStackView(arrangedSubviews: [textField, levelButton, nameButton, fullButton, exportButton, historyButton, clearButton])
         stackView.spacing = 5
-        [levelButton, nameButton, fullButton, exportButton, clearButton].forEach { button in
+        [levelButton, nameButton, fullButton, exportButton, historyButton, clearButton].forEach { button in
             button.translatesAutoresizingMaskIntoConstraints = false
             button.widthAnchor.constraint(equalToConstant: 28).isActive = true
             button.heightAnchor.constraint(equalToConstant: 28).isActive = true

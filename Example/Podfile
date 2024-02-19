@@ -1,6 +1,6 @@
 use_frameworks!
 source 'https://cdn.cocoapods.org/'
-platform :ios, '10.0'
+platform :ios, '11.0'
 
 target 'XLogConsole_Example' do
   pod 'XLogConsole/Helper', :path => '../'

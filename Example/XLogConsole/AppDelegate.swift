@@ -14,13 +14,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        print(NSHomeDirectory())
         // Override point for customization after application launch.
         let console = XLogConsole.shared
         #if !DEBUG
             console.enable = false
         #endif
-//        console.showLogNum = false
+        console.logCache = true
+    //    console.showLogNum = false
     //    console.logDetail = true
     //    console.textAttributes = [.font: UIFont.boldSystemFont(ofSize: 16)]
     //    console.timeAttributes = [.font: UIFont.italicSystemFont(ofSize: 16)]

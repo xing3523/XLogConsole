@@ -15,7 +15,7 @@ class XLogConsoleViewController: UIViewController {
             }
         }
     }
-
+    
     var searchText: String = ""
     var levelDataSet = NSMutableOrderedSet()
     var nameDataSet = NSMutableOrderedSet()
@@ -30,28 +30,46 @@ class XLogConsoleViewController: UIViewController {
             }
         }
     }
-
+    
     var viewFrame: CGRect = .zero
     var keyboardFrame: CGRect = .zero
     var showBtnTransformScalePoint = CGPoint.zero
-
+    
+    private var cacheNum = 0
+    
+    lazy var logDir: URL = {
+        let fileManager = FileManager.default
+        let cacheDir = fileManager.urls(for: .cachesDirectory, in: .userDomainMask)[0]
+        let fileDirURL = cacheDir.appendingPathComponent("XLogCache")
+        if !fileManager.fileExists(atPath: fileDirURL.path) {
+            try? fileManager.createDirectory(at:fileDirURL, withIntermediateDirectories: true)
+        }
+        return fileDirURL
+    }()
+    private lazy var logFilePath: URL = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyyMMdd_HHmmss"
+        let name = formatter.string(from: Date())
+        return logDir.appendingPathComponent("\(name).txt")
+    }()
+    private lazy var logQueue = DispatchQueue(label: "XLogConsole.logQueue")
+    private lazy var logLock = NSLock()
     override func viewDidLoad() {
         super.viewDidLoad()
-
         if #available(iOS 11.0, *) {
         } else {
             automaticallyAdjustsScrollViewInsets = false
         }
         loadUI()
     }
-
+    
     func loadUI() {
         view.addSubview(contentView)
         contentView.addSubview(tableView)
         contentView.addSubview(toolBar)
         toolBar.delegate = self
     }
-
+    
     override func viewDidLayoutSubviews() {
         if viewFrame.equalTo(view.frame) {
             return
@@ -60,7 +78,7 @@ class XLogConsoleViewController: UIViewController {
         reloadSize()
         checkShowButtonFrame()
     }
-
+    
     func reloadSize() {
         var frame = view.frame
         var safeAreaInsets = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
@@ -78,7 +96,7 @@ class XLogConsoleViewController: UIViewController {
         tableView.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height - toolBarHeight - 8)
         toolBar.frame = CGRect(x: 0, y: frame.height - toolBarHeight, width: frame.width, height: toolBarHeight)
     }
-
+    
     func checkShowButtonFrame(hasChange: Bool = false) {
         var safeAreaInsets = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
         if #available(iOS 11.0, *) {
@@ -101,7 +119,7 @@ class XLogConsoleViewController: UIViewController {
             showBtnTransformScalePoint = CGPoint(x: showBtnCenter.x / view.frame.width, y: showBtnCenter.y / view.frame.height)
         }
     }
-
+    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         if !view.frame.size.equalTo(size) {
             for item in showArray {
@@ -110,7 +128,7 @@ class XLogConsoleViewController: UIViewController {
             tableView.reloadData()
         }
     }
-
+    
     lazy var levelFilterController: XLogFilterController = {
         let vc = XLogFilterController()
         vc.modalPresentationStyle = .popover
@@ -122,7 +140,7 @@ class XLogConsoleViewController: UIViewController {
         }
         return vc
     }()
-
+    
     lazy var nameFilterController: XLogFilterController = {
         let vc = XLogFilterController()
         vc.modalPresentationStyle = .popover
@@ -134,14 +152,14 @@ class XLogConsoleViewController: UIViewController {
         }
         return vc
     }()
-
+    
     lazy var contentView: UIView = {
         let view = UIView()
         view.backgroundColor = backgroundColor
         view.alpha = 0
         return view
     }()
-
+    
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .clear
@@ -155,7 +173,7 @@ class XLogConsoleViewController: UIViewController {
         }
         return tableView
     }()
-
+    
     lazy var showButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
         button.autoresizingMask = [.flexibleLeftMargin, .flexibleBottomMargin]
@@ -173,10 +191,10 @@ class XLogConsoleViewController: UIViewController {
         panGesture.require(toFail: longPressGesture)
         return button
     }()
-
+    
     lazy var longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longPressGestureAction(_:)))
     lazy var panGesture = UIPanGestureRecognizer(target: self, action: #selector(panGestureAction(_:)))
-
+    
     let toolBar = XLogConsoleBottomBar()
 }
 
@@ -217,16 +235,42 @@ extension XLogConsoleViewController {
             DispatchQueue.main.async {
                 self.tableView.scrollToRow(at: IndexPath(row: self.showArray.count - 1, section: 0), at: .bottom, animated: true)
             }
-
-            if showButton.isHidden {
-                showButton.isHidden = false
-                view.addSubview(showButton)
-                showButton.center = CGPoint(x: 30, y: view.frame.height - 100)
-                checkShowButtonFrame(hasChange: true)
-            }
+            checkShow()
+        }
+        if console.logCache {
+            let logText = "[\(cacheNum + 1)] " + item.showString() + "\n"
+            saveLog(logText)
+            cacheNum += 1
         }
     }
-
+    
+    func checkShow() {
+        if showButton.isHidden {
+            showButton.isHidden = false
+            view.addSubview(showButton)
+            showButton.center = CGPoint(x: 30, y: view.frame.height - 100)
+            checkShowButtonFrame(hasChange: true)
+        }
+    }
+    
+    func saveLog(_ logText: String) {
+        logQueue.async {
+            let fileURL = self.logFilePath
+            self.logLock.lock()
+            let data = logText.data(using: .utf8)
+            if FileManager.default.fileExists(atPath: fileURL.path) {
+                if let fileHandle = try? FileHandle(forWritingTo: fileURL) {
+                    fileHandle.seekToEndOfFile()
+                    fileHandle.write(data!)
+                    fileHandle.closeFile()
+                }
+            } else {
+                try? data?.write(to: fileURL)
+            }
+            self.logLock.unlock()
+        }
+    }
+    
     func isFilter(item: XLogItem) -> Bool {
         var isLevelFilter = false, isNameFilter = false
         if levelFilterSet.count == 0 || levelFilterSet.count == levelDataSet.count {
@@ -241,7 +285,7 @@ extension XLogConsoleViewController {
         }
         return isLevelFilter && isNameFilter
     }
-
+    
     func filterData() -> [XLogItem] {
         if levelFilterSet.count == 0 || levelFilterSet.count == levelDataSet.count, nameFilterSet.count == 0 || nameFilterSet.count == nameDataSet.count {
             return dataArray
@@ -249,7 +293,7 @@ extension XLogConsoleViewController {
             return dataArray.filter { isFilter(item: $0) }
         }
     }
-
+    
     @objc func touchConsoleAction(_ sender: UIButton) {
         let willShow = contentView.alpha == 0
         UIView.animate(withDuration: 0.25) {
@@ -272,7 +316,7 @@ extension XLogConsoleViewController {
         longPressGesture.isEnabled = !willShow
         panGesture.isEnabled = !willShow
     }
-
+    
     @objc func longPressGestureAction(_ recog: UILongPressGestureRecognizer) {
         if recog.state == .began {
             UIView.animate(withDuration: 0.2) {
@@ -283,7 +327,7 @@ extension XLogConsoleViewController {
             }
         }
     }
-
+    
     @objc func panGestureAction(_ recog: UIPanGestureRecognizer) {
         switch recog.state {
         case .changed:
@@ -304,7 +348,7 @@ extension XLogConsoleViewController: UITableViewDelegate, UITableViewDataSource,
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return showArray.count
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: XLogConsoleItemCell.description()) as! XLogConsoleItemCell
         let item = showArray[indexPath.row]
@@ -317,17 +361,17 @@ extension XLogConsoleViewController: UITableViewDelegate, UITableViewDataSource,
         }
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return showArray[indexPath.row].cacheHeight ?? UITableView.automaticDimension
     }
-
+    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if showArray[indexPath.row].cacheHeight == nil {
             showArray[indexPath.row].cacheHeight = cell.frame.height
         }
     }
-
+    
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
     }
@@ -337,11 +381,11 @@ extension XLogConsoleViewController: XLogConsoleBottomBarDelegate {
     func levelButtonAction(_ sender: UIButton) {
         showFilterController(levelFilterController, onSender: sender)
     }
-
+    
     func nameButtonAction(_ sender: UIButton) {
         showFilterController(nameFilterController, onSender: sender)
     }
-
+    
     func showFilterController(_ vc: XLogFilterController, onSender sender: UIButton) {
         vc.popoverPresentationController?.delegate = self
         vc.popoverPresentationController?.sourceView = sender
@@ -349,11 +393,17 @@ extension XLogConsoleViewController: XLogConsoleBottomBarDelegate {
         vc.popoverPresentationController?.backgroundColor = .white
         present(vc, animated: true, completion: nil)
     }
-
+    
     func fullButtonAction(full: Bool) {
         showLarge = full
     }
-
+    
+    func historyButtonAction() {
+        let vc = XLogHistoryViewController()
+        vc.logDir = logDir
+        vc.showIn(self)
+    }
+    
     func keyboardWillChangeFrame(frame: CGRect) {
         if frame.minY < view.frame.height {
             keyboardFrame = frame
@@ -369,12 +419,12 @@ extension XLogConsoleViewController: XLogConsoleBottomBarDelegate {
             }
         }
     }
-
+    
     func exportButtonAction() {
         let activityViewController = UIActivityViewController(activityItems: [getLogText()], applicationActivities: nil)
         present(activityViewController, animated: true)
     }
-
+    
     func getLogText() -> String {
         var text = ""
         if console.showLogNum {
@@ -390,7 +440,7 @@ extension XLogConsoleViewController: XLogConsoleBottomBarDelegate {
         }
         return text
     }
-
+    
     func clearButtonAction() {
         levelDataSet.removeAllObjects()
         levelFilterSet.removeAllObjects()
@@ -400,7 +450,7 @@ extension XLogConsoleViewController: XLogConsoleBottomBarDelegate {
         showArray.removeAll()
         tableView.reloadData()
     }
-
+    
     func searchTextChangeAction(text: String?) {
         searchText = text ?? ""
         if searchText.isEmpty {
@@ -417,11 +467,11 @@ class XLogConsoleItemCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         loadUI()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     func loadUI() {
         backgroundColor = .clear
         selectionStyle = .none
@@ -432,17 +482,17 @@ class XLogConsoleItemCell: UITableViewCell {
         textView.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
         textView.heightAnchor.constraint(equalTo: contentView.heightAnchor).isActive = true
     }
-
+    
     func sizeThatFits(size: CGSize) -> CGSize {
         var size = textView.sizeThatFits(CGSize(width: size.width, height: .greatestFiniteMagnitude))
         size.height = ceil(size.height)
         return size
     }
-
+    
     override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
         return sizeThatFits(size: targetSize)
     }
-
+    
     lazy var textView: UITextView = {
         let textView = UITextView()
         textView.frame = contentView.bounds
